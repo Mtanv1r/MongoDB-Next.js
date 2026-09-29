@@ -1,62 +1,49 @@
-"use client"   
-   
-import React from 'react';
+"use client";
+
+import { signIn } from "@/lib/auth-client";
 // import {Check} from "@gravity-ui/icons";
 import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
-import { signUp } from '@/lib/auth-client';
 
 
+import React from 'react';
 
+const page = () => {
 
-const page =  () => {
-    //adding event 
-      const onSubmit = async (e) => {
+    // event handler 
+
+  const onSubmit = async (e) => {
     e.preventDefault();
-    //stopping reloading 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    //converting data from plain object 
-    console.log("data from data",data);
-
-    //destructuring and taking data
-    const {data:resData , error} = await signUp.email({
-        name:data.name,
+    //javascript system
+    // jhankar bai part 
+      const data = Object.fromEntries(formData.entries());
+      console.log(   "form er data",data)
+      
+//   destructuring part 
+// goes to mongodb
+   const {data:resData , error} = await signIn.email({
+        // name:data.name,
         email:data.email,
         password:data.password,
+        // remember me part true 
+        rememberMe:true,
+        // after use route goes to homepage
+        callbackURL: "/", 
     })
 
-    console.log(resData,error)
+    console.log("after submit",resData,error)
+
+
   };
 
 
 
 
 
-
-
     return (
-        <div className="container mx-auto p-30">
+        <div className="container mx-auto p-50">
             <h1>sign-up page</h1>
-            {/* form start  */}
-
-              <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
-
-  <TextField
-            isRequired
-            name="name"
-            validate={(value) => {
-              if (value.length < 3) {
-                return "Name must be at least 3 characters";
-              }
-              return null;
-            }}
-          >
-            <Label>Name</Label>
-            <Input placeholder="John Doe" />
-            <FieldError />
-          </TextField>
-
-                
+               <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
       <TextField
         isRequired
         name="email"
@@ -91,7 +78,7 @@ const page =  () => {
         }}
       >
         <Label>Password</Label>
-        <Input placeholder="Enter your password" />
+        <Input placeholder="Tor password ta de niya nimu" />
         <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>

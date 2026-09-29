@@ -1,49 +1,62 @@
-"use client";
-
-import { signIn } from "@/lib/auth-client";
+"use client"   
+   
+import React from 'react';
 // import {Check} from "@gravity-ui/icons";
 import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
+import { signUp } from '@/lib/auth-client';
 
 
-import React from 'react';
 
-const page = () => {
 
-    // event handler 
-
-  const onSubmit = async (e) => {
+const page =  () => {
+    //adding event 
+      const onSubmit = async (e) => {
     e.preventDefault();
+    //stopping reloading 
     const formData = new FormData(e.currentTarget);
-    //javascript system
-    // jhankar bai part 
-      const data = Object.fromEntries(formData.entries());
-      console.log(   "form er data",data)
-      
-//   destructuring part 
-// goes to mongodb
-   const {data:resData , error} = await signIn.email({
-        // name:data.name,
+    const data = Object.fromEntries(formData.entries());
+    //converting data from plain object 
+    console.log("data from data",data);
+
+    //destructuring and taking data
+    const {data:resData , error} = await signUp.email({
+        name:data.name,
         email:data.email,
         password:data.password,
-        // remember me part true 
-        rememberMe:true,
-        // after use route goes to homepage
-        callbackURL: "/", 
     })
 
-    console.log("after submit",resData,error)
-
-
+    console.log(resData,error)
   };
 
 
 
 
 
+
+
     return (
-        <div className="container mx-auto p-50">
+        <div className="container mx-auto p-30">
             <h1>sign-up page</h1>
-               <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+            {/* form start  */}
+
+              <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+
+  <TextField
+            isRequired
+            name="name"
+            validate={(value) => {
+              if (value.length < 3) {
+                return "Name must be at least 3 characters";
+              }
+              return null;
+            }}
+          >
+            <Label>Name</Label>
+            <Input placeholder="John Doe" />
+            <FieldError />
+          </TextField>
+
+                
       <TextField
         isRequired
         name="email"
@@ -78,7 +91,7 @@ const page = () => {
         }}
       >
         <Label>Password</Label>
-        <Input placeholder="Tor password ta de niya nimu" />
+        <Input placeholder="Enter your password" />
         <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
         <FieldError />
       </TextField>

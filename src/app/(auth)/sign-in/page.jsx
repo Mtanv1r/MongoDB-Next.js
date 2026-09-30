@@ -42,7 +42,7 @@ const page = () => {
 
     return (
         <div className="container mx-auto p-50">
-            <h1>sign-up page</h1>
+            <h1>sign-in page</h1>
                <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
       <TextField
         isRequired

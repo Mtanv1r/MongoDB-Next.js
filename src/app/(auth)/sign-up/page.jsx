@@ -3,13 +3,25 @@
 import React from 'react';
 // import {Check} from "@gravity-ui/icons";
 import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
-import { signUp } from '@/lib/auth-client';
+import { signIn, signUp } from '@/lib/auth-client';
 
 
 
 
 const page =  () => {
     //adding event 
+
+     const googleClick = async ()=>{
+        const resdata= await signIn.social({
+          provider:'google'
+        })
+
+        console.log( "after google signing..",  resdata)
+      }
+
+
+
+    
       const onSubmit = async (e) => {
     e.preventDefault();
     //stopping reloading 
@@ -35,7 +47,7 @@ const page =  () => {
 
 
     return (
-        <div className="container mx-auto p-30">
+        <div className="container mx-auto p-50 flex flex-col items-center justify-evenly gap-10">
             <h1>sign-up page</h1>
             {/* form start  */}
 
@@ -105,6 +117,8 @@ const page =  () => {
         </Button>
       </div>
     </Form>
+    <h1>Or</h1>
+        <Button variant="secondary" onClick={googleClick}>Google</Button>
         </div>
     );
 };

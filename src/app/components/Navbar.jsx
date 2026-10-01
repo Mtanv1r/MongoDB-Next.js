@@ -3,14 +3,24 @@
 
 
 import { useState } from "react";
-import { Link, Button } from "@heroui/react";
+import { Link, Button ,Spinner } from "@heroui/react";
 import { useSession } from "@/lib/auth-client";
+// import {Eye, EyeSlash} from "@gravity-ui/icons";
+import {  signOut } from "@/lib/auth-client";
 
 export default function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const {data:session}=useSession();
+  const {data:session,isPending}=useSession();
   console.log("user session in navbar",session);
+
+
+  if(isPending){
+    return    <div className="flex flex-col items-center gap-2">
+        <Spinner />
+        <span className="text-xs text-muted">Loading....</span>
+      </div>
+  }
 
 //using fragment
   const link = <>
@@ -32,14 +42,16 @@ const AuthLink =
   session?.user ? (
     <>
     <span>Welcome, {session.user.name}</span>
+    <Button onClick={()=>signOut()}>sign-out</Button>
       </>
 
   ) : (
     <>
-      <Link href="/sign-in">Login</Link>
-      <Button as={Link} href="/sign-up">
+      <Link href="/sign-in">sign-in</Link>
+      {/* <Button as={Link} href="/sign-up">
         Sign Up
-      </Button>
+      </Button> */}
+      <Link href="/sign-up"><Button>sign-up</Button></Link>
     </>
   );
  

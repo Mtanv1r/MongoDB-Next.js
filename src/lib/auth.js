@@ -15,6 +15,16 @@ export const auth = betterAuth({
     enabled: true, 
   }, 
   //...
+  // adding social provider 
+  // social provider name
+  socialProviders:{
+ google: {
+     clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.BETTER_AUTH_GOOGLE_SECRET
+
+  }
+  },
+
     database: mongodbAdapter(db, {
     // Optional: if you don't provide a client, database transactions won't be enabled.
     client

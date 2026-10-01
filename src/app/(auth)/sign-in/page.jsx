@@ -1,15 +1,28 @@
 "use client";
 
-import { signIn } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 // import {Check} from "@gravity-ui/icons";
-import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
+import {Eye, EyeSlash} from "@gravity-ui/icons";
+import {Button, Description, FieldError, Form, Input, InputGroup, Label, TextField} from "@heroui/react";
+import { google } from "better-auth";
+// import {sInputGroup, Label, TextField} from "@heroui/react";
+import {useState} from "react";
 
 
 import React from 'react';
 
-const page = () => {
+const Page = () => {
 
     // event handler 
+      const [isVisible, setIsVisible] = useState(false);
+
+      // const googleClick = async ()=>{
+      //   const resdata=await signIn.social({
+      //     provider:'google'
+      //   })
+
+      //   console.log(resdata)
+      // }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +54,7 @@ const page = () => {
 
 
     return (
-        <div className="container mx-auto p-50">
+        <div className="container mx-auto p-50 flex flex-col items-center justify-evenly gap-10">
             <h1>sign-in page</h1>
                <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
       <TextField
@@ -59,6 +72,28 @@ const page = () => {
         <Input placeholder="john@example.com" />
         <FieldError />
       </TextField>
+          <TextField className="w-full max-w-[280px]" name="password">
+      <Label>Password</Label>
+      <InputGroup>
+        <InputGroup.Input
+          className="w-full max-w-[280px]"
+          type={isVisible ? "text" : "password"}
+          //hard coded
+          // value={isVisible ? "87$2h.3diua" : "••••••••"}
+        />
+        <InputGroup.Suffix className="pe-0">
+          <Button
+            isIconOnly
+            aria-label={isVisible ? "Hide password" : "Show password"}
+            size="sm"
+            variant="ghost"
+            onPress={() => setIsVisible(!isVisible)}
+          >
+            {isVisible ? <Eye className="size-4" /> : <EyeSlash className="size-4" />}
+          </Button>
+        </InputGroup.Suffix>
+      </InputGroup>
+    </TextField>
       <TextField
         isRequired
         minLength={8}
@@ -92,8 +127,11 @@ const page = () => {
         </Button>
       </div>
     </Form>
+    <h1>OR</h1>
+    
+      <Button variant="secondary" onClick={googleClick}>Google</Button>
         </div>
     );
 };
 
-export default page;
+export default Page;

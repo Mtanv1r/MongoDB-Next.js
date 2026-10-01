@@ -20,6 +20,16 @@ const page =  () => {
       }
 
 
+      // fot github 
+      const githubClick= async () =>{
+        const resdata=await signIn.social({
+          provider:'github'
+        })
+        console.log(resdata)
+
+      }
+
+
 
     
       const onSubmit = async (e) => {
@@ -119,6 +129,7 @@ const page =  () => {
     </Form>
     <h1>Or</h1>
         <Button variant="secondary" onClick={googleClick}>Google</Button>
+        <Button variant="secondary" onClick={githubClick}>Github</Button>
         </div>
     );
 };

@@ -26,16 +26,16 @@ export default function Nav() {
   const link = <>
 
       <li>
-            <Link href="#">Features</Link>
+            <Link href="/">Services</Link>
           </li>
           <li>
-            <Link href="#" className="font-medium text-accent" aria-current="page">
+            <Link href="/dashboard" className="font-medium text-accent" aria-current="page">
               Dashboard
             </Link>
           </li>
-          <li>
-            <Link href="#">Pricing</Link>
-          </li>
+           <li> 
+            <Link href="/profile">profile</Link>
+          </li> 
   </>
 
 const AuthLink =
@@ -48,9 +48,6 @@ const AuthLink =
   ) : (
     <>
       <Link href="/sign-in">sign-in</Link>
-      {/* <Button as={Link} href="/sign-up">
-        Sign Up
-      </Button> */}
       <Link href="/sign-up"><Button>sign-up</Button></Link>
     </>
   );
@@ -96,7 +93,7 @@ const AuthLink =
           </button>
           <div className="flex items-center gap-3">
            
-            <p className="font-bold">ACME</p>
+            <Link href="/" className="font-bold">ACME</Link>
           </div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">

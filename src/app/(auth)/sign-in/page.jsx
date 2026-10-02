@@ -16,13 +16,6 @@ const Page = () => {
     // event handler 
       const [isVisible, setIsVisible] = useState(false);
 
-      // const googleClick = async ()=>{
-      //   const resdata=await signIn.social({
-      //     provider:'google'
-      //   })
-
-      //   console.log(resdata)
-      // }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -126,11 +119,7 @@ const Page = () => {
           Reset
         </Button>
       </div>
-    </Form>
-    <h1>OR</h1>
-    
-      <Button variant="secondary" onClick={googleClick}>Google</Button>
-        </div>
+    </Form>     </div>
     );
 };
 

@@ -1,137 +1,137 @@
-"use client"   
-   
-import React from 'react';
-// import {Check} from "@gravity-ui/icons";
-import {Button, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
-import { signIn, signUp } from '@/lib/auth-client';
 
+"use client";
 
+import React from "react";
+import {
+  Button,
+  Description,
+  FieldError,
+  Form,
+  Input,
+  Label,
+  TextField,
+} from "@heroui/react";
 
+import { signIn, signUp } from "@/lib/auth-client";
 
-const page =  () => {
-    //adding event 
+const Page = () => {
 
-     const googleClick = async ()=>{
-        const resdata= await signIn.social({
-          provider:'google'
-        })
+  // Google login
+  const googleClick = async () => {
+    const resdata = await signIn.social({
+      provider: "google",
+    });
 
-        console.log( "after google signing..",  resdata)
-      }
-
-
-      // fot github 
-      const githubClick= async () =>{
-        const resdata=await signIn.social({
-          provider:'github'
-        })
-        console.log(resdata)
-
-      }
-
-
-
-    
-      const onSubmit = async (e) => {
-    e.preventDefault();
-    //stopping reloading 
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    //converting data from plain object 
-    console.log("data from data",data);
-
-    //destructuring and taking data
-    const {data:resData , error} = await signUp.email({
-        name:data.name,
-        email:data.email,
-        password:data.password,
-    })
-
-    console.log(resData,error)
+    console.log("after google signing..", resdata);
   };
 
+  // Github login
+  const githubClick = async () => {
+    const resdata = await signIn.social({
+      provider: "github",
+    });
 
+    console.log("after github signing..", resdata);
+  };
 
+  // Email signup
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
 
+    console.log("data from form:", data);
 
+    const { data: resData, error } = await signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
 
-    return (
-        <div className="container mx-auto p-50 flex flex-col items-center justify-evenly gap-10">
-            <h1>sign-up page</h1>
-            {/* form start  */}
+    console.log(resData, error);
+  };
 
-              <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
+  return (
+    <div className="container mx-auto flex flex-col items-center justify-evenly gap-10 p-10">
 
-  <TextField
-            isRequired
-            name="name"
-            validate={(value) => {
-              if (value.length < 3) {
-                return "Name must be at least 3 characters";
-              }
-              return null;
-            }}
-          >
-            <Label>Name</Label>
-            <Input placeholder="John Doe" />
-            <FieldError />
-          </TextField>
+      <h1>Sign Up Page</h1>
 
-                
-      <TextField
-        isRequired
-        name="email"
-        type="email"
-        validate={(value) => {
-          if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-            return "Please enter a valid email address";
-          }
-          return null;
-        }}
+      <Form
+        className="flex w-96 flex-col gap-4"
+        onSubmit={onSubmit}
       >
-        <Label>Email</Label>
-        <Input placeholder="john@example.com" />
-        <FieldError />
-      </TextField>
-      <TextField
-        isRequired
-        minLength={8}
-        name="password"
-        type="password"
-        validate={(value) => {
-          if (value.length < 8) {
-            return "Password must be at least 8 characters";
-          }
-          if (!/[A-Z]/.test(value)) {
-            return "Password must contain at least one uppercase letter";
-          }
-          if (!/[0-9]/.test(value)) {
-            return "Password must contain at least one number";
-          }
-          return null;
-        }}
-      >
-        <Label>Password</Label>
-        <Input placeholder="Enter your password" />
-        <Description>Must be at least 8 characters with 1 uppercase and 1 number</Description>
-        <FieldError />
-      </TextField>
-      <div className="flex gap-2">
-        <Button type="submit">
-          {/* <Check /> */}
-          Submit
-        </Button>
-        <Button type="reset" variant="secondary">
-          Reset
-        </Button>
-      </div>
-    </Form>
-    <h1>Or</h1>
-        <Button variant="secondary" onClick={googleClick}>Google</Button>
-        <Button variant="secondary" onClick={githubClick}>Github</Button>
+
+        <TextField
+          isRequired
+          name="name"
+          validate={(value) => {
+            if (value.length < 3) {
+              return "Name must be at least 3 characters";
+            }
+
+            return null;
+          }}
+        >
+          <Label>Name</Label>
+          <Input placeholder="John Doe" />
+          <FieldError />
+        </TextField>
+
+        <TextField
+          isRequired
+          name="email"
+          type="email"
+        >
+          <Label>Email</Label>
+          <Input placeholder="john@example.com" />
+          <FieldError />
+        </TextField>
+
+        <TextField
+          isRequired
+          name="password"
+          type="password"
+          minLength={8}
+        >
+          <Label>Password</Label>
+          <Input placeholder="Enter your password" />
+          <Description>
+            Must be at least 8 characters
+          </Description>
+          <FieldError />
+        </TextField>
+
+        <div className="flex gap-2">
+          <Button type="submit">
+            Submit
+          </Button>
+
+          <Button type="reset" variant="secondary">
+            Reset
+          </Button>
         </div>
-    );
+
+      </Form>
+
+      <h1>Or</h1>
+
+      <Button
+        variant="secondary"
+        onClick={googleClick}
+      >
+        Google
+      </Button>
+
+      <Button
+        variant="secondary"
+        onClick={githubClick}
+      >
+        Github
+      </Button>
+
+    </div>
+  );
 };
 
-export default page;
+export default Page;
